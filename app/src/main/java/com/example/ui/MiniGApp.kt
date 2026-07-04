@@ -3301,98 +3301,68 @@ fun MafiaCardCompose(role: MafiaRole, showRoleDetails: Boolean = true) {
         )
       )
       .border(2.dp, accentColor, RoundedCornerShape(16.dp))
-      .padding(12.dp)
   ) {
-    // Parchment paper look
-    Box(
-      modifier = Modifier
-        .fillMaxWidth()
-        .clip(RoundedCornerShape(12.dp))
-        .background(Color(0xFFF7ECD5))
-        .border(1.dp, Color(0xFF5C4025), RoundedCornerShape(12.dp))
-        .padding(12.dp)
+    Column(
+      horizontalAlignment = Alignment.CenterHorizontally,
+      modifier = Modifier.fillMaxWidth()
     ) {
-      Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.fillMaxWidth()
+      // 1. Full-width role image using its native wanted-poster aspect ratio (1792x2400)
+      Box(
+        modifier = Modifier
+          .fillMaxWidth()
+          .aspectRatio(1792f / 2400f)
+          .clip(RoundedCornerShape(topStart = 14.dp, topEnd = 14.dp))
       ) {
-        // TOP HEADER
-        Text(
-          text = if (role.alliance == "СИЛЫ СВЕТА") "ДОБРО ПОЖАЛОВАТЬ" else "РАЗЫСКИВАЕТСЯ",
-          color = Color(0xFF5C4025),
-          fontWeight = FontWeight.Black,
-          fontSize = 11.sp,
-          letterSpacing = 1.sp,
-          fontFamily = FontFamily.Serif
+        val context = androidx.compose.ui.platform.LocalContext.current
+        val imageModel = getMafiaRoleImageModel(context, role)
+        coil.compose.AsyncImage(
+          model = imageModel,
+          contentDescription = role.roleName,
+          modifier = Modifier.fillMaxSize(),
+          contentScale = androidx.compose.ui.layout.ContentScale.Crop
         )
-        Spacer(modifier = Modifier.height(2.dp))
-        Text(
-          text = role.englishName,
-          color = if (role.alliance == "СИЛЫ СВЕТА") Color(0xFF1A5A5C) else Color(0xFF901A1E),
-          fontWeight = FontWeight.Black,
-          fontSize = 20.sp,
-          letterSpacing = 1.5.sp,
-          fontFamily = FontFamily.Monospace
-        )
+      }
 
-        Spacer(modifier = Modifier.height(8.dp))
-
-        // PORTRAIT PLACEHOLDER
-        Box(
-          modifier = Modifier
-            .size(100.dp)
-            .clip(RoundedCornerShape(12.dp))
-            .background(Color(0x1F5C4025))
-            .border(2.dp, Color(0xFF5C4025), RoundedCornerShape(12.dp)),
-          contentAlignment = Alignment.Center
-        ) {
-          val context = androidx.compose.ui.platform.LocalContext.current
-          val imageModel = getMafiaRoleImageModel(context, role)
-          coil.compose.AsyncImage(
-            model = imageModel,
-            contentDescription = role.roleName,
-            modifier = Modifier.fillMaxSize(),
-            contentScale = androidx.compose.ui.layout.ContentScale.Crop
-          )
-        }
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        // MIDDLE TEXT
+      // 2. Russian role description styled on a dark glass background
+      Column(
+        modifier = Modifier
+          .fillMaxWidth()
+          .background(Color(0xFF150A02).copy(alpha = 0.95f))
+          .padding(14.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+      ) {
         Text(
           text = role.roleName.uppercase(),
-          color = Color(0xFF4A341E),
+          color = NeonYellow,
           fontWeight = FontWeight.Black,
           fontSize = 14.sp,
-          fontFamily = FontFamily.Serif
+          letterSpacing = 1.sp
         )
-        Spacer(modifier = Modifier.height(2.dp))
+        Spacer(modifier = Modifier.height(4.dp))
         Text(
           text = role.description,
-          color = Color(0xFF5C4025),
+          color = TextPrimary,
           fontWeight = FontWeight.Bold,
-          fontSize = 10.sp,
-          textAlign = TextAlign.Center,
-          fontFamily = FontFamily.Serif,
-          lineHeight = 12.sp
+          fontSize = 11.sp,
+          textAlign = TextAlign.Center
         )
 
         if (showRoleDetails) {
-          Spacer(modifier = Modifier.height(8.dp))
+          Spacer(modifier = Modifier.height(10.dp))
           Box(
             modifier = Modifier
               .fillMaxWidth()
-              .background(Color(0x115C4025), RoundedCornerShape(6.dp))
-              .padding(8.dp)
+              .background(Color.Black.copy(alpha = 0.5f), RoundedCornerShape(8.dp))
+              .border(1.dp, accentColor.copy(alpha = 0.3f), RoundedCornerShape(8.dp))
+              .padding(10.dp)
           ) {
             Text(
               text = role.detailDescription,
-              color = Color(0xFF4A341E),
+              color = TextSecondary,
               fontWeight = FontWeight.Medium,
               fontSize = 10.sp,
               textAlign = TextAlign.Center,
-              fontFamily = FontFamily.SansSerif,
-              lineHeight = 13.sp
+              lineHeight = 14.sp
             )
           }
         }
