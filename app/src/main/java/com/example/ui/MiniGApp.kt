@@ -3284,7 +3284,11 @@ fun DraftResultsScreen(onNavigate: (Screen) -> Unit, viewModel: MainViewModel) {
 // ==========================================
 
 @Composable
-fun MafiaCardCompose(role: MafiaRole, showRoleDetails: Boolean = true) {
+fun MafiaCardCompose(
+  role: MafiaRole,
+  showRoleDetails: Boolean = true,
+  onClick: (() -> Unit)? = null
+) {
   val accentColor = when (role.alliance) {
     "СИЛЫ СВЕТА" -> NeonCyan
     else -> NeonRed
@@ -3301,6 +3305,9 @@ fun MafiaCardCompose(role: MafiaRole, showRoleDetails: Boolean = true) {
         )
       )
       .border(2.dp, accentColor, RoundedCornerShape(16.dp))
+      .then(
+        if (onClick != null) Modifier.clickable { onClick() } else Modifier
+      )
   ) {
     Column(
       horizontalAlignment = Alignment.CenterHorizontally,
@@ -3885,21 +3892,27 @@ fun MafiaPassScreen(onNavigate: (Screen) -> Unit, viewModel: MainViewModel) {
           )
           Spacer(modifier = Modifier.height(8.dp))
 
-          MafiaCardCompose(role = activePlayer.role, showRoleDetails = true)
+          val onConfirm: () -> Unit = {
+            viewModel.revealMafiaPlayerRole(activePlayer.id)
+            if (currentPlayerIdx < players.size - 1) {
+              isRevealed = false
+              currentPlayerIdx++
+            } else {
+              viewModel.startMafiaNight()
+              onNavigate(Screen.MafiaActive)
+            }
+          }
+
+          MafiaCardCompose(
+            role = activePlayer.role,
+            showRoleDetails = false,
+            onClick = onConfirm
+          )
 
           Spacer(modifier = Modifier.height(16.dp))
           NeonButton(
             text = "Я понял, скрыть роль",
-            onClick = {
-              viewModel.revealMafiaPlayerRole(activePlayer.id)
-              if (currentPlayerIdx < players.size - 1) {
-                isRevealed = false
-                currentPlayerIdx++
-              } else {
-                viewModel.startMafiaNight()
-                onNavigate(Screen.MafiaActive)
-              }
-            },
+            onClick = onConfirm,
             color = NeonGreen,
             modifier = Modifier.fillMaxWidth().testTag("mafia_confirm_role_btn")
           )
