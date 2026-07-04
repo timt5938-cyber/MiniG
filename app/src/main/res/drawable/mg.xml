@@ -1,0 +1,28 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="200dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
+    <!-- Dark/purple cyber background circle -->
+    <path
+        android:fillColor="#120B1E"
+        android:pathData="M 100, 100 m -80, 0 a 80,80 0 1,0 160,0 a 80,80 0 1,0 -160,0" />
+    <!-- Outer glowing neon border -->
+    <path
+        android:strokeWidth="4"
+        android:strokeColor="#FF00F3"
+        android:pathData="M 100, 100 m -75, 0 a 75,75 0 1,0 150,0 a 75,75 0 1,0 -150,0" />
+    <!-- Inner cyan accent circle -->
+    <path
+        android:strokeWidth="2"
+        android:strokeColor="#00F3FF"
+        android:pathData="M 100, 100 m -68, 0 a 68,68 0 1,0 136,0 a 68,68 0 1,0 -136,0" />
+    <!-- Letter M (stylized tech/cyber look) -->
+    <path
+        android:fillColor="#00F3FF"
+        android:pathData="M65,75 L77,75 L87,105 L97,75 L109,75 L109,125 L97,125 L97,95 L87,120 L77,95 L77,125 L65,125 Z" />
+    <!-- Letter G (stylized tech/cyber look) -->
+    <path
+        android:fillColor="#FF00F3"
+        android:pathData="M117,100 C117,85 125,75 140,75 C155,75 163,85 163,100 L163,105 L143,105 L143,113 L153,113 C153,117 148,121 140,121 C132,121 127,113 127,100 Z" />
+</vector>

@@ -1,0 +1,6 @@
+{
+  "name": "MiniG",
+  "description": "Сборник настольных игр для дотеров: Alias CS, Киллер Контракт и Скрытый Драфт. Неоновый дизайн Gorilla Glass, локальное сохранение в Room и угарные мемы.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
