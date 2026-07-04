@@ -18,4 +18,7 @@ local.properties
 debug.keystore
 *.jks
 *.keystore
+git_key
+git_key.pub
+
 
